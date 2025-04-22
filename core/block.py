@@ -6,7 +6,6 @@ class Block:
     index: int
     size: int
     data: bytes | None = None
-    is_free: bool = True
     allocated: bool = False
 
     def read(self):
@@ -17,14 +16,17 @@ class Block:
             raise RuntimeError('Espaço requerido maior que o disponivel no setor')
 
         self.data = data
-        self.is_free = False
+        self.allocated = False
 
     def clear(self):
         self.data = None
-        self.is_free = True
+        self.allocated = True
 
     def allocate(self):
         self.allocated = True
 
     def free(self):
         self.allocated = False
+
+    def __repr__(self):
+        return f"Block(index={self.index}, size={self.size}, data={self.data}, allocated={self.allocated})"
